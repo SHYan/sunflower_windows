@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+
+<hibernate-mapping package="com.floreantpos.model">
+	<class lazy="false" name="com.floreantpos.model.Shenfen" table="shenfen">
+		<id column="ID" name="id" type="java.lang.Integer">
+	      <generator class="identity"/>
+	    </id>
+	    <property column="BRANCHNAME" length="255" name="branchName" type="java.lang.String" />
+		<property column="YANZHENGMA" length="255" name="yanZhengMa" type="java.lang.String" />
+		<property column="SHEBEIHAO" length="64" name="sheBeiHao" type="java.lang.String" />
+		<property column="ZHUCEZHONGLEI" length="64" name="zhuCeZhongLei" type="java.lang.String" />
+		<property column="SHEBEIZHONGLEI" length="64" name="sheBeiZhongLei" type="java.lang.String" />
+		<property column="BRAND" length="64" name="brand" type="java.lang.String" />
+		<property column="MODEL" length="64" name="model" type="java.lang.String" />
+		<property column="OS" length="64" name="os" type="java.lang.String" />
+		<property column="OSVERSION" length="64" name="osVersion" type="java.lang.String" />
+		
+		
+		<property column="CHUANGJIANSHIJIAN" name="chuangJianShiJian" type="java.lang.Long" />
+		<property column="QIXIAN" name="qiXian" type="java.lang.Long" />
+		<property column="ZUIHOUGENXINCHENGGONG" name="zuiHouGenXinChengGong" type="java.lang.Long" />
+		<property column="ZUIHOUGENXIN" name="zuiHouGenXin" type="java.lang.Long" />
+		<property column="GENXINZHUANGTAI" name="genXinZhuangTai" type="java.lang.String" />
+		
+	</class>
+</hibernate-mapping>

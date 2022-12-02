@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jasperTemplate PUBLIC "-//JasperReports//DTD Template//EN" "http://jasperreports.sourceforge.net/dtds/jaspertemplate.dtd">
+
+<jasperTemplate>
+	<style name="qty" hAlign="Right" vAlign="Middle" fontName="SansSerif" fontSize="9" pdfFontName="Helvetica" pdfEncoding="Identity-H" isPdfEmbedded="true" pattern="#,###.#;-#,###.#">
+		<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2"/>
+	</style>
+	<style name="qty_line" style="qty">
+		<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
+			<bottomPen lineWidth="0.5"/>
+		</box>
+	</style>
+    <style name="qty_line_top" style="qty">
+		<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
+			<topPen lineWidth="0.5"/>
+		</box>
+	</style>
+	<style name="qty_border" style="qty">
+		<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
+			<pen lineWidth="0.5"/>
+			<topPen lineWidth="0.5"/>
+			<leftPen lineWidth="0.5"/>
+			<bottomPen lineWidth="0.5"/>
+			<rightPen lineWidth="0.5"/>
+		</box>
+	</style>
+	
+</jasperTemplate>

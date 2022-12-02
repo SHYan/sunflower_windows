@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="GoodsSale" pageWidth="202" pageHeight="8420" whenNoDataType="AllSectionsNoDetail" columnWidth="162" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" isIgnorePagination="true" uuid="291f0987-704e-4a12-b55c-65c3a725a1d1">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<template><![CDATA[$P{TEMPLATE_FILE}]]></template>
+	<template><![CDATA[$P{PRICE_TEMPLATE_FILE}]]></template>
+	<template><![CDATA[$P{QTY_TEMPLATE_FILE}]]></template>
+	<parameter name="TEMPLATE_FILE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["reportStyle.jrtx"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PRICE_TEMPLATE_FILE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["priceStyle_0.jrtx"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="QTY_TEMPLATE_FILE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["qtyStyle_0.jrtx"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="periodString" class="java.lang.String">
+		<defaultValueExpression><![CDATA["not duration"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="branchName" class="java.lang.String">
+		<defaultValueExpression><![CDATA["no branch"]]></defaultValueExpression>
+	</parameter>
+	<field name="categoryName" class="java.lang.String"/>
+	<field name="productName" class="java.lang.String"/>
+	<field name="stockAmount" class="java.lang.Double"/>
+	<field name="productNo" class="java.lang.Integer"/>
+	<field name="productBarcode" class="java.lang.String"/>
+	<field name="unitName" class="java.lang.String"/>
+	<field name="beverage" class="java.lang.Boolean"/>
+	<pageHeader>
+		<band height="60">
+			<textField isStretchWithOverflow="true">
+				<reportElement style="reportTitle" stretchType="RelativeToTallestObject" x="0" y="0" width="162" height="40" uuid="8f92195b-4feb-4db5-a111-7d2b1ae29172"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" markup="none"/>
+				<textFieldExpression><![CDATA["Stock Report"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="text_left" stretchType="RelativeToTallestObject" x="0" y="40" width="162" height="20" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="9564f5a0-d8f9-4c2c-8365-405e844e85bd"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{branchName}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement style="columnHeader_line_left" stretchType="RelativeToTallestObject" x="0" y="0" width="116" height="30" uuid="a6d6f9e3-878b-4929-8dd8-a52374ddb172"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA["Product"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="columnHeader_line_right" stretchType="RelativeToTallestObject" x="116" y="0" width="46" height="30" uuid="2ff1416d-4d69-45ae-a832-5f052f776529"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA["Stock"]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="18">
+			<textField isStretchWithOverflow="true">
+				<reportElement style="text_left" stretchType="RelativeToTallestObject" x="0" y="0" width="116" height="18" uuid="833af04d-7214-4ef7-a25d-1a4cfc5de4c4"/>
+				
+				<textFieldExpression><![CDATA[$F{productName}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="qty" stretchType="RelativeToTallestObject" x="116" y="0" width="46" height="18" uuid="ddbc48a7-3617-4035-ba75-f1a14f47e33c"/>
+				
+				<textFieldExpression><![CDATA[$F{stockAmount}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<lastPageFooter>
+		<band height="20">
+			<textField isStretchWithOverflow="true">
+				<reportElement style="text_line_top" stretchType="RelativeToTallestObject" x="0" y="0" width="162" height="20" uuid="b470f852-9a0d-41dd-aab5-c2ee3a047e7a"/>
+				<textElement textAlignment="Left" markup="none"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</lastPageFooter>
+</jasperReport>

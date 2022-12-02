@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Shenfen">
+     
+     <select id="get_shenfen" parameterType="HashMap" resultType="com.floreantpos.model.Shenfen">
+	        SELECT * FROM shenfen WHERE shebeihao = #{uid}
+    </select>
+    
+    <delete id="delete_shenfen" parameterType="HashMap"> 
+    	delete from shenfen where id = #{id}
+    </delete>
+    
+    <insert id="insert_shenfen" parameterType="HashMap"> 
+    	INSERT INTO shenfen(branchname, yanzhengma, shebeihao, zhucezhonglei, shebeizhonglei, brand, model, 
+    		os, osversion, chuangjianshijian, qixian, zuihougenxinchenggong, zuihougenxin, genxinzhuangtai ) 
+		VALUES(#{branchName}, #{key}, #{uid}, #{zhuCeZhongLei}, #{sheBeiZhongLei}, #{brand}, #{model}, #{os}, #{osVersion},
+			#{chuangJianShiJian}, #{qiXian}, #{zuiHouGenXinChengGong}, #{zuiHouGenXin}, #{genXinZhuangTai})
+    </insert>
+    
+    <update id="update_shenfen_sync_fail" parameterType="HashMap"> 
+    	UPDATE shenfen SET zuihougenxin = #{zuiHouGenXin} , genxinzhuangtai = #{genXinZhuangTai}, qixian = #{qiXian}
+    	WHERE id = #{id}
+    </update>
+    
+    <update id="update_shenfen" parameterType="HashMap"> 
+    	UPDATE shenfen SET branchname = #{branchName}, yanzhengma = #{yanZhengMa}, shebeihao = #{uid}, zhucezhonglei = #{zhuCeZhongLei}, shebeizhonglei = #{sheBeiZhongLei}, 
+    		brand = #{brand}, model = #{model}, os = #{os}, osversion = #{osVersion}, 
+    		qixian = #{qiXian}, zuihougenxinchenggong = #{zuiHouGenXinChengGong}, zuihougenxin = #{zuiHouGenXin}, genxinzhuangtai = #{genXinZhuangTai}
+    		WHERE id = #{id}
+    </update>
+    
+    <update id="update_terminal_location" parameterType="HashMap">
+        UPDATE terminal SET location = #{tempLocation} WHERE id=#{tempId}
+    </update>    
+     
+</mapper>

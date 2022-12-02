@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="GoodsSale" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="879df837-ad79-4d5c-84f7-f8d62f6967d5">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="78"/>
+	<property name="ireport.y" value="0"/>
+	<template><![CDATA[$P{TEMPLATE_FILE}]]></template>
+	<template><![CDATA[$P{PRICE_TEMPLATE_FILE}]]></template>
+	<template><![CDATA[$P{QTY_TEMPLATE_FILE}]]></template>
+	<parameter name="TEMPLATE_FILE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["reportStyle.jrtx"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PRICE_TEMPLATE_FILE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["priceStyle_0.jrtx"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="QTY_TEMPLATE_FILE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["qtyStyle_0.jrtx"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="periodString" class="java.lang.String">
+		<defaultValueExpression><![CDATA["not duration"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="branchName" class="java.lang.String">
+		<defaultValueExpression><![CDATA["no branch"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="key" class="java.lang.String" isForPrompting="false"/>
+	<field name="productName" class="java.lang.String"/>
+	<field name="oldQty" class="java.lang.Double"/>
+	<field name="productId" class="java.lang.Integer"/>
+	<field name="procurementQty" class="java.lang.Double"/>
+	<field name="transferQty" class="java.lang.Double"/>
+	<field name="balanceQty" class="java.lang.Double"/>
+	<field name="sghQty" class="java.lang.Double"/>
+	<field name="super1Qty" class="java.lang.Double"/>
+	<field name="loseQty" class="java.lang.Double"/>
+	<field name="demageQty" class="java.lang.Double"/>
+	<field name="extraQty" class="java.lang.Double"/>
+	<field name="otherQty" class="java.lang.Double"/>
+	<field name="returnQty" class="java.lang.Double"/>
+	<field name="convertQty" class="java.lang.Double"/>
+	<field name="altName" class="java.lang.String"/>
+	<field name="remark" class="java.lang.String"/>
+	<pageHeader>
+		<band height="65">
+			<textField isStretchWithOverflow="true">
+				<reportElement style="reportTitle_right" stretchType="RelativeToTallestObject" x="0" y="0" width="464" height="40" uuid="a259a205-23ac-4a86-a99d-33ac92fdbbd5"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textFieldExpression><![CDATA["HC Daily Stock Report"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="text_right" stretchType="RelativeToTallestObject" x="464" y="0" width="90" height="20" uuid="e7557c02-b030-4b89-a6fc-179ea7ffa3e9"/>
+				<textFieldExpression><![CDATA["Duration : "]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="text_left" stretchType="RelativeToTallestObject" x="554" y="0" width="248" height="20" uuid="a2ae64b0-8753-402f-a903-c40ec5704b0a"/>
+
+				<textFieldExpression><![CDATA[$P{periodString}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="text_right" stretchType="RelativeToTallestObject" x="464" y="20" width="90" height="20" uuid="90f439c9-5e07-46cb-a487-b3de077754a1"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textFieldExpression><![CDATA["Branch : "]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="text_left" stretchType="RelativeToTallestObject" x="554" y="20" width="248" height="20" uuid="ba2f5a6a-9f02-4a2f-a19a-cdf472a07c7c"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+				</box>
+
+				<textFieldExpression><![CDATA[$P{branchName}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="0" y="0" width="152" height="40" uuid="21663e3d-47b1-4e3d-8124-0c4ee0607b2e"/>
+				<imageExpression><![CDATA["rpt_logo.jpg"]]></imageExpression>
+			</image>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="text_right" stretchType="RelativeToTallestObject" x="0" y="40" width="92" height="25" uuid="6d6009ad-c986-49e3-8518-21ccaaaae641"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textFieldExpression><![CDATA["Checker 1 : "]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="text_right" stretchType="RelativeToTallestObject" x="284" y="40" width="90" height="25" uuid="75492ccc-13de-4767-a1f7-026a906fd377"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textFieldExpression><![CDATA["Checker 2 : "]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="text_right" stretchType="RelativeToTallestObject" x="509" y="40" width="90" height="25" uuid="ef3bd84b-c782-4215-b1f6-7f0d307e4f6f"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textFieldExpression><![CDATA["Checker 3 : "]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="text_left" stretchType="RelativeToTallestObject" x="92" y="40" width="192" height="25" uuid="861662b9-dad9-464a-a5c9-2e223c3d3232"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+				</box>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="text_left" stretchType="RelativeToTallestObject" x="374" y="40" width="135" height="25" uuid="493ed761-0b39-46f6-acf7-fbc5307dd797"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+				</box>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="text_left" stretchType="RelativeToTallestObject" x="599" y="40" width="203" height="25" uuid="e7b5a39b-697e-49d3-9565-7f3eac8dd774"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+				</box>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement style="columnHeader_line_left" stretchType="RelativeToTallestObject" x="0" y="0" width="92" height="30" uuid="66f18f69-95a2-4b6c-a711-e52e9ef5a867"/>
+
+				<textFieldExpression><![CDATA["Product"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="columnHeader_line_right" stretchType="RelativeToTallestObject" x="149" y="0" width="45" height="30" uuid="ab5df886-b2cb-40dc-922f-7e2d1c104b72"/>
+
+				<textFieldExpression><![CDATA["Old"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="columnHeader_line_right" stretchType="RelativeToTallestObject" x="194" y="0" width="45" height="30" uuid="a6d7cf98-cdec-4e31-a894-a82bdbc7ab30"/>
+
+				<textFieldExpression><![CDATA["Procu"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="columnHeader_line_right" stretchType="RelativeToTallestObject" x="239" y="0" width="45" height="30" uuid="49849ebf-3a29-4355-8b55-d543062ad49a"/>
+
+				<textFieldExpression><![CDATA["Transfer"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="columnHeader_line_right" stretchType="RelativeToTallestObject" x="284" y="0" width="45" height="30" uuid="95ed3dd7-bf5d-41e6-964c-3d9b84b75481"/>
+
+				<textFieldExpression><![CDATA["SGH"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="columnHeader_line_right" stretchType="RelativeToTallestObject" x="329" y="0" width="45" height="30" uuid="22f07adb-d2dc-4783-a9bb-bb35134fb8aa"/>
+
+				<textFieldExpression><![CDATA["Super1"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="columnHeader_line_right" stretchType="RelativeToTallestObject" x="374" y="0" width="45" height="30" uuid="c4b966f8-e9ae-469a-a968-a19dfef445da"/>
+
+				<textFieldExpression><![CDATA["Demage"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="columnHeader_line_right" stretchType="RelativeToTallestObject" x="464" y="0" width="45" height="30" uuid="8f175634-c916-4f3a-ae74-ea87d96926f9"/>
+
+				<textFieldExpression><![CDATA["Lose"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="columnHeader_line_right" stretchType="RelativeToTallestObject" x="509" y="0" width="45" height="30" uuid="abdd9cb6-eab3-4d92-9414-0305ebc64cf5"/>
+
+				<textFieldExpression><![CDATA["Extra"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="columnHeader_line_right" stretchType="RelativeToTallestObject" x="554" y="0" width="45" height="30" uuid="8a24cc19-1185-4a92-9e52-56f1429fed51"/>
+
+				<textFieldExpression><![CDATA["Convert"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="columnHeader_line_right" stretchType="RelativeToTallestObject" x="599" y="0" width="45" height="30" uuid="fb4ea714-2991-480c-af48-ffb9d308c3d0"/>
+
+				<textFieldExpression><![CDATA["Other"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="columnHeader_line" stretchType="RelativeToTallestObject" x="688" y="0" width="114" height="30" uuid="89cd467d-c15c-40c8-8b99-f399ada2ee2a"/>
+
+				<textFieldExpression><![CDATA["Remark"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="columnHeader_line_left" stretchType="RelativeToTallestObject" x="92" y="0" width="57" height="30" uuid="65b65969-f43e-4dbe-9a7b-212f00fdced8"/>
+
+				<textFieldExpression><![CDATA["Product"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="columnHeader_line_right" stretchType="RelativeToTallestObject" x="419" y="0" width="45" height="30" uuid="da0437cf-4194-4652-9fbf-a227974b3092"/>
+
+				<textFieldExpression><![CDATA["Return"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="columnHeader_line_right" stretchType="RelativeToTallestObject" x="644" y="0" width="44" height="30" uuid="a4985743-abcf-4b4e-b538-8d86010c0773"/>
+
+				<textFieldExpression><![CDATA["Balance"]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="25">
+			<printWhenExpression><![CDATA[$P{key}!=null]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="text_left" stretchType="RelativeToTallestObject" x="0" y="0" width="92" height="25" uuid="269dafef-4834-41a5-b4f0-fa2a3c44d85a"/>
+
+				<textFieldExpression><![CDATA[$F{productName}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="qty" stretchType="RelativeToTallestObject" x="149" y="0" width="45" height="25" uuid="4ebe9d6e-f720-410d-9548-9271993740e9"/>
+
+				<textFieldExpression><![CDATA[$F{oldQty}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="qty" stretchType="RelativeToTallestObject" x="194" y="0" width="45" height="25" uuid="1ba53199-ce62-42eb-8a08-15f2c201e290"/>
+
+				<textFieldExpression><![CDATA[$F{procurementQty}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="qty" stretchType="RelativeToTallestObject" x="239" y="0" width="45" height="25" uuid="9e3dd33c-5c04-479c-be9a-501da69dc924"/>
+
+				<textFieldExpression><![CDATA[$F{transferQty}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="qty" stretchType="RelativeToTallestObject" x="284" y="0" width="45" height="25" uuid="819b91c6-6a77-4df0-8c15-8c101ae2beca"/>
+
+				<textFieldExpression><![CDATA[$F{sghQty}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="qty" stretchType="RelativeToTallestObject" x="329" y="0" width="45" height="25" uuid="9600d372-91d5-41f1-af95-8b560846779c"/>
+
+				<textFieldExpression><![CDATA[$F{super1Qty}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="qty" stretchType="RelativeToTallestObject" x="374" y="0" width="45" height="25" uuid="7de46127-3424-4eb9-a057-be223c553c8f"/>
+
+				<textFieldExpression><![CDATA[$F{demageQty}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="qty" stretchType="RelativeToTallestObject" x="464" y="0" width="45" height="25" uuid="4116800f-31ba-415a-8454-078f6cd785c1"/>
+
+				<textFieldExpression><![CDATA[$F{loseQty}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="qty" stretchType="RelativeToTallestObject" x="509" y="0" width="45" height="25" uuid="2ef0a36b-3f27-4f04-85ea-75e0bc073126"/>
+
+				<textFieldExpression><![CDATA[$F{extraQty}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="qty" stretchType="RelativeToTallestObject" x="554" y="0" width="45" height="25" uuid="173b4790-09b8-40bf-8b92-660440ab551a"/>
+
+				<textFieldExpression><![CDATA[$F{convertQty}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="qty" stretchType="RelativeToTallestObject" x="599" y="0" width="45" height="25" uuid="a70dcc8a-7127-4171-aff1-554c5064c0d0"/>
+
+				<textFieldExpression><![CDATA[$F{otherQty}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="text_left" stretchType="RelativeToTallestObject" x="688" y="0" width="114" height="25" uuid="8631cc3a-1fe1-47ae-a38c-cc259b8e6dd4"/>
+
+				<textFieldExpression><![CDATA[$F{remark}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="text_left" stretchType="RelativeToTallestObject" x="92" y="0" width="57" height="25" uuid="8c5ad1a3-dbb4-4d38-8dd3-6b2438734334"/>
+
+				<textFieldExpression><![CDATA[$F{altName}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="qty" stretchType="RelativeToTallestObject" x="419" y="0" width="45" height="25" uuid="880a7ff6-4a64-40cb-b4d5-58a45e28b61a"/>
+
+				<textFieldExpression><![CDATA[$F{returnQty}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="qty" stretchType="RelativeToTallestObject" x="644" y="0" width="44" height="25" uuid="798e2525-bbc3-4980-b5d1-551ac2188228"/>
+
+				<textFieldExpression><![CDATA[$F{balanceQty}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<lastPageFooter>
+		<band height="20">
+			<textField isStretchWithOverflow="true">
+				<reportElement style="text_line_top" stretchType="RelativeToTallestObject" x="0" y="0" width="464" height="20" uuid="9044be15-b1c0-47c2-b28a-b32efebe2eca"/>
+
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="text_line_top" stretchType="RelativeToTallestObject" x="464" y="0" width="135" height="20" uuid="dc7e21bb-c2b6-436c-a0a5-2a6d204d37d3"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+				</box>
+				<textFieldExpression><![CDATA["Page"+$V{PAGE_NUMBER}+" /"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" evaluationTime="Report">
+				<reportElement style="text_line_top" stretchType="RelativeToTallestObject" x="599" y="0" width="203" height="20" uuid="cbcc2e2a-0a59-4a19-8e76-a026ab0110d5"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+				</box>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</lastPageFooter>
+</jasperReport>

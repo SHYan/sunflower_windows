@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="inventory_transaction">
+	
+	<select id="get_inventory_transaction" parameterType="HashMap" resultType="com.floreantpos.model.InventoryTransaction">
+        SELECT menu_item.name as item_name, 
+		inventory_transaction.id, 
+		to_char(inventory_transaction.transaction_date, 'YYYY-MM-DD HH:mm') AS transDate, 
+		inventory_transaction.old_quantity AS oldQuantity, 
+		inventory_transaction.unit_quantity AS quantity, 
+		inventory_transaction.unit_price AS unitPrice, 
+		inventory_transaction.remark, 
+		inventory_transaction.tran_type, 
+		inventory_transaction.reference_id, 
+		inventory_transaction.item_id, 
+		inventory_transaction.vendor_id, 
+		inventory_transaction.from_warehouse_id, 
+		inventory_transaction.to_warehouse_id, 
+		inventory_vendor.name as vendor_name, 
+		inventory_warehouse.name as warehouse_name
+		FROM inventory_transaction 
+		LEFT JOIN inventory_vendor ON inventory_transaction.vendor_id = inventory_vendor.id
+		LEFT JOIN inventory_warehouse ON inventory_transaction.to_warehouse_id = inventory_warehouse.id
+		INNER JOIN menu_item ON inventory_transaction.item_id = menu_item.id
+		WHERE ( inventory_transaction.transaction_date BETWEEN #{startDate} AND #{endDate}) AND menu_item.name  LIKE '%${keyword}%' 
+		<if test="selectedType != null">
+		    	AND tran_type = #{selectedType}
+	  	</if>
+	  	order by inventory_transaction.transaction_date desc, menu_item.name 
+		limit 200
+    </select>
+    
+	<!-- 
+	<select id="get_inventory_vendor" parameterType="HashMap" resultType="com.floreantpos.model.InventoryVendor">
+        SELECT id, name, address, city, state, zip, country, email, phone, fax from inventory_vendor
+    </select>
+     -->
+	
+    <insert id="insert_inventory_transaction" parameterType="HashMap"> 
+    <!-- <choose>
+    	<when test='tran_type=="Procurement"'>
+    		INSERT INTO menu_item_adjustment(transaction_date, unit_quantity, unit_price, remark, tran_type, item_id, vendor_id)
+			VALUES(#{transaction_date}, #{qty}, #{price}, #{remark}, #{tran_type}, #{item_id}, #{vendor_id})
+    	</when>
+    	<when test='tran_type=="Demage"'>	
+		INSERT INTO menu_item_adjustment(transaction_date, unit_quantity, unit_price, remark, tran_type, item_id, vendor_id)
+		VALUES(#{transaction_date}
+		</when>
+		<otherwise>
+		</otherwise>
+    </choose> -->
+    	INSERT INTO inventory_transaction(transaction_date, old_quantity, unit_quantity, unit_price, remark, tran_type, item_id, vendor_id, to_warehouse_id)
+		VALUES(#{transaction_date}, #{old_qty}, #{qty}, #{price}, #{remark}, #{tran_type}, #{item_id}, #{vendor_id}, #{warehouse_id})
+	</insert>
+    
+    <update id="update_inventory_transaction" parameterType="HashMap">
+    <choose>
+    	<when test='tran_type=="Inventory"'>
+    		UPDATE menu_item SET stock_amount=#{qty} WHERE id=#{item_id}
+    	</when>
+    	<otherwise>
+    		UPDATE menu_item SET stock_amount=stock_amount+#{qty} WHERE id=#{item_id}
+		</otherwise>
+	</choose>
+    <!-- <if test='tran_type=="Procurement"'>
+			UPDATE menu_item SET stock_amount=stock_amount+#{qty} WHERE id=#{item_id}
+		</if>
+		<if test='tran_type=="Demage"'>	
+			UPDATE menu_item SET stock_amount=stock_amount-#{qty} WHERE id=#{item_id}
+		</if>
+		<if test='tran_type=="Inventory"'>
+			UPDATE menu_item SET stock_amount=#{qty} WHERE id=#{item_id}
+		</if>
+		<if test='tran_type=="Others"'>
+			UPDATE menu_item SET stock_amount=stock_amount+#{qty} WHERE id=#{item_id}
+		</if> -->	
+	</update> 
+	
+	<select id="get_menu_item" parameterType="HashMap" resultType="com.floreantpos.model.MenuItem">
+        SELECT mi.id as id, mi.name as name, mi.translated_name as translatedName,
+		mi.stock_amount stockAmount
+		FROM menu_item AS mi
+		WHERE mi.visible=true
+		<if test="item_name != ''">
+		    	AND name like '%${item_name}%'
+	  	</if>
+		<if test="categoryName != null "> AND mi.category_name=#{categoryName} </if>
+	    <if test="groupName != null "> AND mi.group_name=#{groupName} </if>
+		order by mi.id
+    </select>
+    
+	<select id="getProduct_Return" parameterType="HashMap" resultType="com.floreantpos.model.mybatis.MenuItemM">
+    	SELECT 0 AS changeQty, mi.price AS price, 
+    	mi.name AS productName, mi.id AS productNo
+    	FROM menu_item AS mi
+    	WHERE mi.visible=true 
+	    <if test="categoryName != null "> AND mi.category_name=#{categoryName} </if>
+	    <if test="groupName != null "> AND mi.group_name=#{groupName} </if>
+	    ORDER BY mi.id
+    </select>
+    
+	<select id="getProduct_Stock_Return" parameterType="HashMap" resultType="com.floreantpos.model.mybatis.MenuItemM">
+    	SELECT SUM(t.unit_quantity) changeQty, mi.price price, 
+    	mi.name productName, mi.id as productNo
+    	FROM inventory_transaction AS t 
+    	LEFT JOIN menu_item AS mi ON (t.item_id=mi.id) 
+    	LEFT JOIN inventory_warehouse AS w ON (t.to_warehouse_id=w.id)
+    	WHERE t.transaction_date BETWEEN #{startDate} AND #{endDate} AND t.tran_type='Transfer'
+	    <if test="categoryName != null "> AND mi.category_name=#{categoryName} </if>
+	    <if test="groupName != null "> AND mi.group_name=#{groupName} </if>
+	    <if test="warehouseName != null "> AND w.name=#{warehouseName} </if>
+	    <if test="warehouseId != null "> AND t.to_warehouse_id=#{warehouseId} </if>
+	    <if test="item_id != null "> AND t.item_id=#{item_id} </if>
+	    GROUP BY mi.price, mi.name, mi.id
+	    ORDER BY mi.id
+    </select>
+    <select id="getProduct_Stock_Return_Qty" parameterType="HashMap" resultType="java.lang.Integer">
+    	SELECT SUM(t.unit_quantity) changeQty FROM inventory_transaction AS t 
+    	LEFT JOIN inventory_warehouse AS w ON (t.to_warehouse_id=w.id)
+    	WHERE t.transaction_date BETWEEN #{startDate} AND #{endDate} AND t.tran_type='Transfer'
+	    <if test="warehouseName != null "> AND w.name=#{warehouseName} </if>
+	    <if test="warehouseId != null "> AND t.to_warehouse_id=#{warehouseId} </if>
+	    <if test="item_id != null "> AND t.item_id=#{item_id} </if>
+	    LIMIT 1
+    </select>
+  
+	<insert id="insert_inventory_return_transaction" parameterType="HashMap"> 
+    	INSERT INTO inventory_transaction(transaction_date, old_quantity, unit_quantity, tran_type, item_id, to_warehouse_id)
+		VALUES(#{transaction_date}, #{old_qty}, #{qty}, #{tran_type}, #{item_id}, #{warehouse_id})
+	</insert>
+	
+	
+    
+    <select id="get_HC_daily_stock" parameterType="Map" resultType="com.floreantpos.model.mybatis.HCDailyStockM">
+   		SELECT t.item_id AS productId, mi.name AS productName, mi.translated_name AS altName,
+		SUM(CASE WHEN t.tran_type='Inventory' THEN t.unit_quantity ELSE 0 END) AS oldQty,
+		SUM(CASE WHEN t.tran_type='Transfer' THEN t.unit_quantity ELSE 0 END) AS transferQty,
+		SUM(CASE WHEN t.tran_type='Procurement' THEN t.unit_quantity ELSE 0 END) AS procurementQty,
+		SUM(CASE WHEN t.tran_type='Demage' THEN t.unit_quantity ELSE 0 END) AS demageQty,
+		SUM(CASE WHEN t.tran_type='Return' THEN t.unit_quantity ELSE 0 END) AS returnQty,
+		SUM(CASE WHEN t.tran_type='Convert' THEN t.unit_quantity ELSE 0 END) AS convertQty,
+		SUM(CASE WHEN t.tran_type='Lose' THEN t.unit_quantity ELSE 0 END) AS loseQty,
+		SUM(CASE WHEN t.tran_type='Extra' THEN t.unit_quantity ELSE 0 END) AS extraQty,
+		SUM(CASE WHEN t.tran_type='Other' THEN t.unit_quantity ELSE 0 END) AS otherQty,
+		SUM(CASE WHEN t.tran_type='Transfer' AND t.to_warehouse_id=1 THEN t.unit_quantity ELSE 0 END) AS sghQty,
+		SUM(CASE WHEN t.tran_type='Transfer' AND t.to_warehouse_id=2 THEN t.unit_quantity ELSE 0 END) AS super1Qty
+		FROM inventory_transaction AS t
+		LEFT JOIN menu_item AS mi ON (t.item_id = mi.id)
+		WHERE t.transaction_date BETWEEN #{startDate} AND #{endDate}
+		GROUP BY t.item_id, mi.name, mi.translated_name
+		ORDER BY t.item_id 
+    </select>
+    <select id="get_HC_daily_stock_warehouse" parameterType="Map" resultType="com.floreantpos.model.mybatis.HCDailyStockM">
+   		SELECT t.item_id AS productId, mi.name AS productName, mi.translated_name AS altName,
+		SUM(CASE WHEN t.tran_type='Inventory' THEN t.unit_quantity ELSE 0 END) AS oldQty,
+		SUM(CASE WHEN t.tran_type='Transfer' AND (t.to_warehouse_id!=1 AND t.to_warehouse_id!=2) THEN t.unit_quantity ELSE 0 END) AS transferQty,
+		SUM(CASE WHEN t.tran_type='Procurement' THEN t.unit_quantity ELSE 0 END) AS procurementQty,
+		SUM(CASE WHEN t.tran_type='Demage' THEN t.unit_quantity ELSE 0 END) AS demageQty,
+		SUM(CASE WHEN t.tran_type='Return' THEN t.unit_quantity ELSE 0 END) AS returnQty,
+		SUM(CASE WHEN t.tran_type='Convert' THEN t.unit_quantity ELSE 0 END) AS convertQty,
+		SUM(CASE WHEN t.tran_type='Lose' THEN t.unit_quantity ELSE 0 END) AS loseQty,
+		SUM(CASE WHEN t.tran_type='Extra' THEN t.unit_quantity ELSE 0 END) AS extraQty,
+		SUM(CASE WHEN t.tran_type='Other' THEN t.unit_quantity ELSE 0 END) AS otherQty,
+		SUM(CASE WHEN t.tran_type='Transfer' AND t.to_warehouse_id=1 THEN t.unit_quantity ELSE 0 END) AS sghQty,
+		SUM(CASE WHEN t.tran_type='Transfer' AND t.to_warehouse_id=2 THEN t.unit_quantity ELSE 0 END) AS super1Qty
+		FROM inventory_transaction AS t LEFT JOIN menu_item AS mi ON (t.item_id = mi.id)
+		WHERE t.transaction_date BETWEEN #{startDate} AND #{endDate}
+		GROUP BY t.item_id, mi.name, mi.translated_name
+		ORDER BY t.item_id 
+    </select>
+    
+	 <select id="getHC_return_warehouse" parameterType="Map" resultType="com.floreantpos.model.mybatis.HCReturnListM">
+        SELECT w.id AS warehouseId, w.name AS warehouse
+        FROM inventory_transaction AS t
+		LEFT JOIN menu_item AS mi ON (t.item_id = mi.id)
+		LEFT JOIN inventory_warehouse AS w ON (t.to_warehouse_id=w.id)
+		WHERE t.transaction_date BETWEEN #{startDate} AND #{endDate} AND t.tran_type='Transfer'
+		<if test="categoryName != null "> AND mi.category_name=#{categoryName} </if>
+		<if test="groupName != null "> AND mi.group_name=#{groupName} </if>
+		<if test="warehouseId != null "> AND t.to_warehouse_id=#{warehouseId} </if>
+		GROUP BY w.id, w.name
+		ORDER BY w.id
+    </select>
+    
+    <select id="getHC_return_list" parameterType="Map" resultType="com.floreantpos.model.mybatis.HCReturnListDetailM">
+   		SELECT mi.name AS productName, 
+   		SUM(CASE WHEN t.tran_type='Transfer' THEN t.unit_quantity ELSE 0 END) AS transferQty,
+   		SUM(CASE WHEN t.tran_type='Return' THEN t.unit_quantity ELSE 0 END) AS returnQty
+		FROM inventory_transaction AS t
+		LEFT JOIN menu_item AS mi ON (t.item_id = mi.id)
+		WHERE t.transaction_date BETWEEN #{startDate} AND #{endDate} AND (t.tran_type='Transfer' OR t.tran_type='Return')
+		<if test="categoryName != null "> AND mi.category_name=#{categoryName} </if>
+		<if test="groupName != null "> AND mi.group_name=#{groupName} </if>
+	    <if test="warehouseId != null "> AND t.to_warehouse_id=#{warehouseId} </if>
+		GROUP BY mi.name
+		ORDER BY mi.name
+    </select>
+	
+</mapper>

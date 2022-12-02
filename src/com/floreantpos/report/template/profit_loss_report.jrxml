@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="payout_report" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="bc0d1c93-d583-403c-a7ec-ef11e9749ba4">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<template><![CDATA[$P{TEMPLATE_FILE}]]></template>
+	<template><![CDATA[$P{PRICE_TEMPLATE_FILE}]]></template>
+	<template><![CDATA[$P{QTY_TEMPLATE_FILE}]]></template>
+	<parameter name="TEMPLATE_FILE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["reportStyle.jrtx"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PRICE_TEMPLATE_FILE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["priceStyle_0.jrtx"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="QTY_TEMPLATE_FILE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["qtyStyle_0.jrtx"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="periodString" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="branchName" class="java.lang.String" isForPrompting="false"/>
+	<field name="transactionDate" class="java.sql.Timestamp"/>
+	<field name="amountIn" class="java.lang.Double"/>
+	<field name="amountOut" class="java.lang.Double"/>
+	<field name="amount" class="java.lang.Double"/>
+	<variable name="amountInSum" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{amountIn}]]></variableExpression>
+	</variable>
+	<variable name="amountOutSum" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{amountOut}]]></variableExpression>
+	</variable>
+	<variable name="amountSum" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{amount}]]></variableExpression>
+	</variable>
+	<variable name="total" class="java.lang.Double"/>
+	<pageHeader>
+		<band height="53">
+			<textField isStretchWithOverflow="true">
+				<reportElement style="reportTitle_right" x="0" y="0" width="297" height="53" uuid="084d15c9-01e0-46a6-b670-8d90be9794ae"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textFieldExpression><![CDATA["Profit / Loss Report"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="text_right" x="297" y="0" width="58" height="32" uuid="ba0bf652-c53c-4f35-887d-c02de080508e"/>
+				<textFieldExpression><![CDATA["Duration : "]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="">
+				<reportElement style="text_left" x="355" y="0" width="200" height="32" uuid="043718ca-d4cf-4660-a565-d19dd587e62c"/>
+				<textFieldExpression><![CDATA[$P{periodString}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="text_left" stretchType="RelativeToTallestObject" x="355" y="32" width="200" height="21" uuid="c252e775-3da6-45e4-9d04-d6265e6d9979"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{branchName}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="text_right" stretchType="RelativeToTallestObject" x="297" y="32" width="58" height="21" uuid="9e429973-48c6-4465-a7a9-65a2c9b0da99"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textFieldExpression><![CDATA["Branch : "]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="0" y="11" width="117" height="42" uuid="aa7d894c-060e-4b5a-9295-aff31e520df0"/>
+				<imageExpression><![CDATA["rpt_logo.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement style="columnHeader_line_left" x="0" y="0" width="155" height="20" uuid="2514f142-9550-465d-8cf6-e7c4898d24a8"/>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="columnHeader_line_right" x="155" y="0" width="100" height="20" uuid="a65c0264-c579-4d88-aad8-47589c09416c"/>
+				<text><![CDATA[Sales Income]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="columnHeader_line_right" x="355" y="0" width="100" height="20" uuid="06929d74-4f70-438a-8d69-727be3c7a322"/>
+				<text><![CDATA[Paid Payout]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="columnHeader_line_right" x="455" y="0" width="100" height="20" uuid="2c68b1ab-08e7-4721-9602-2ab0c6710902"/>
+				<text><![CDATA[Balance]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="columnHeader_line_right" x="255" y="0" width="100" height="20" uuid="1a824c58-5fc7-468a-b082-6d3b46af46ec"/>
+				<text><![CDATA[Get Payout]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement style="text_left" x="0" y="0" width="155" height="20" uuid="7947d413-2fc6-429c-8f02-562a57a2084d"/>
+				<textFieldExpression><![CDATA[$F{transactionDate}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="price" x="155" y="0" width="100" height="20" uuid="25422780-9937-431c-a172-ce1f90a10d08"/>
+				<textFieldExpression><![CDATA[$F{amount}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="price" x="355" y="0" width="100" height="20" uuid="873c7c3c-677f-448e-aea6-3324c30cbd58"/>
+				<textFieldExpression><![CDATA[$F{amountOut}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="price" x="455" y="0" width="100" height="20" uuid="05bba015-a23b-4eae-a5f7-373a2baa4741"/>
+				<textFieldExpression><![CDATA[$F{amount}-$F{amountIn}-$F{amountOut}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="price" x="255" y="0" width="100" height="20" uuid="e460021c-8473-4724-a17c-3dd8988f0093"/>
+				<textFieldExpression><![CDATA[$F{amountIn}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement style="text_right" stretchType="RelativeToTallestObject" x="355" y="0" width="100" height="20" uuid="7630d04a-8693-4b8a-a4cd-a882981012d9"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+				</box>
+				<textFieldExpression><![CDATA["Page :"+$V{PAGE_NUMBER}+" /"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" evaluationTime="Report">
+				<reportElement style="text_left" stretchType="RelativeToTallestObject" x="455" y="0" width="100" height="20" uuid="4a988de8-f4ca-4943-944c-5151ca9cc100"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+				</box>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="text_left" stretchType="RelativeToTallestObject" x="0" y="0" width="355" height="20" uuid="c54c0e44-4840-4ade-9d77-aa8dd2fc9ccd"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+				</box>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="20" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement style="text_line_top" stretchType="RelativeToTallestObject" x="0" y="0" width="155" height="20" isPrintWhenDetailOverflows="true" uuid="ffc5c6b3-73e2-4a3c-ad61-963542285135"/>
+				<textFieldExpression><![CDATA["TOTAL"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="price_line_top" x="155" y="0" width="100" height="20" uuid="014b1fc0-3a19-4803-be30-62167a40c9a7"/>
+				<textFieldExpression><![CDATA[$V{amountSum}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="price_line_top" x="355" y="0" width="100" height="20" uuid="9e4ef38c-91e5-4b05-b1a2-68976781d2a8"/>
+				<textFieldExpression><![CDATA[$V{amountOutSum}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement style="price_line_top" x="455" y="0" width="100" height="20" uuid="e3a68a0a-8af9-4fef-97c5-fbd631639d4d"/>
+				<textFieldExpression><![CDATA[$V{amountSum} - $V{amountInSum} - $V{amountOutSum}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="price_line_top" x="255" y="0" width="100" height="20" uuid="fd2c6708-37e5-4c32-8e55-8f7567db2dcc"/>
+				<textFieldExpression><![CDATA[$V{amountInSum}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>
